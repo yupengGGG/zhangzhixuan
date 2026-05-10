@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>母亲节派对信封</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:"Microsoft YaHei",sans-serif;
+
+    /* 粉蓝渐变背景 */
+    background:linear-gradient(
+        -45deg,
+        #ffd6e7,
+        #ffdff2,
+        #dff4ff,
+        #cfe8ff
+    );
+
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+}
+
+/* 背景渐变动画 */
+
+@keyframes bgMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+}
+
+/* 漂浮圆形 */
+
+.bubble{
+    position:absolute;
+    border-radius:50%;
+    opacity:0.25;
+    animation:float 8s infinite ease-in-out;
+}
+
+.b1{
+    width:120px;
+    height:120px;
+    background:#ffffff;
+    top:8%;
+    left:10%;
+}
+
+.b2{
+    width:180px;
+    height:180px;
+    background:#ffd6ec;
+    bottom:10%;
+    left:8%;
+    animation-delay:2s;
+}
+
+.b3{
+    width:140px;
+    height:140px;
+    background:#d9f0ff;
+    top:15%;
+    right:10%;
+    animation-delay:1s;
+}
+
+.b4{
+    width:100px;
+    height:100px;
+    background:#ffffff;
+    bottom:12%;
+    right:15%;
+    animation-delay:3s;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-25px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* 隐藏checkbox */
+
+#open{
+    display:none;
+}
+
+/* 信封 */
+
+.envelope{
+    position:relative;
+    width:430px;
+    height:280px;
+}
+
+/* 信封主体 */
+
+.envelope-body{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#fff5fa;
+    border-radius:12px;
+    overflow:hidden;
+
+    box-shadow:0 20px 50px rgba(0,0,0,0.18);
+}
+
+/* 左侧折角 */
+
+.envelope-body::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+
+    background:#ffdceb;
+
+    clip-path:polygon(0 0,50% 55%,0 100%);
+}
+
+/* 右侧折角 */
+
+.envelope-body::after{
+    content:"";
+    position:absolute;
+    right:0;
+    top:0;
+    width:100%;
+    height:100%;
+
+    background:#d8ecff;
+
+    clip-path:polygon(100% 0,50% 55%,100% 100%);
+}
+
+/* 上盖 */
+
+.flap{
+    position:absolute;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:170px;
+
+    background:linear-gradient(
+        135deg,
+        #ffd3e6,
+        #d9efff
+    );
+
+    clip-path:polygon(0 0,100% 0,50% 100%);
+
+    transform-origin:top;
+    transition:1.2s ease;
+
+    z-index:5;
+}
+
+/* 信纸 */
+
+.letter{
+    position:absolute;
+    left:50%;
+    bottom:10px;
+    transform:translateX(-50%);
+
+    width:88%;
+    height:88%;
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:38px 30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+
+    opacity:0;
+
+    transition:1.2s ease;
+
+    z-index:2;
+}
+
+/* 标题 */
+
+.letter h1{
+    text-align:center;
+    color:#d87093;
+    margin-bottom:24px;
+    font-size:30px;
+    letter-spacing:2px;
+}
+
+/* 祝福内容 */
+
+.letter p{
+    text-align:center;
+    line-height:2.2;
+    color:#6b6b6b;
+    font-size:17px;
+}
+
+/* 按钮 */
+
+.btn{
+    position:absolute;
+    left:50%;
+    bottom:-120px;
+
+    transform:translateX(-50%);
+
+    padding:13px 34px;
+
+    border-radius:30px;
+
+    background:linear-gradient(
+        135deg,
+        #ffb6d2,
+        #a7d8ff
+    );
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    box-shadow:0 15px 25px rgba(0,0,0,0.15);
+
+    transition:0.3s;
+
+    user-select:none;
+}
+
+.btn:hover{
+    transform:translateX(-60%) scale(1.05);
+}
+
+/* 默认按钮文字 */
+
+.btn::before{
+    content:"打开信封";
+}
+
+/* 打开后按钮文字 */
+
+#open:checked ~ .envelope .btn::before{
+    content:"关闭信封";
+}
+
+/* 打开动画 */
+
+#open:checked ~ .envelope .flap{
+    transform:rotateX(180deg);
+    z-index:1;
+}
+
+#open:checked ~ .envelope .letter{
+    bottom:95px;
+    opacity:1;
+}
+
+/* 小爱心装饰 */
+
+.heart{
+    position:absolute;
+    color:white;
+    font-size:24px;
+    animation:heartFloat 5s infinite ease-in-out;
+    opacity:0.7;
+}
+
+.h1{
+    top:12%;
+    left:20%;
+}
+
+.h2{
+    top:18%;
+    right:18%;
+    animation-delay:1.5s;
+}
+
+.h3{
+    bottom:15%;
+    left:25%;
+    animation-delay:2.5s;
+}
+
+@keyframes heartFloat{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-18px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 漂浮装饰 -->
+<div class="bubble b1"></div>
+<div class="bubble b2"></div>
+<div class="bubble b3"></div>
+<div class="bubble b4"></div>
+
+<div class="heart h1">❤</div>
+<div class="heart h2">❤</div>
+<div class="heart h3">❤</div>
+
+<input type="checkbox" id="open">
+
+<div class="envelope">
+
+    <div class="envelope-body"></div>
+
+    <div class="flap"></div>
+
+    <div class="letter">
+
+        <h1>Happy Mother's Day</h1>
+
+        <p>
+            愿您的每一天都温柔明亮，<br>
+            愿笑容与幸福常伴身旁。<br><br>
+
+            谢谢您一直以来的爱与守护。<br>
+            母亲节快乐 ❤️
+        </p>
+
+    </div>
+
+    <label for="open" class="btn"></label>
+
+</div>
+
+</body>
+</html>
